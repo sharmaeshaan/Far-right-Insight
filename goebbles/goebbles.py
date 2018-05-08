@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-import csv
 import time
 
 requests_header = {'user-agent': 'nlp-researcher'}
@@ -32,6 +31,7 @@ def get_each():
     x = 0 
     # iterate over each page link  
     for l in rel_page_links:
+        # time.sleep(0.25)
         try:
             eachpage = requests.get(l, headers = requests_header)
             eachpage.encoding = 'utf-8'
