@@ -22,14 +22,18 @@ def getfiles():
 def allwords():
     stpwrds = stopwords.words('english')
     custom_stpwrds = ('’', ',', '.', 'would', 'way', 'year',
-                      'make', 'rather', 'able', 'yet', 'meet', '“', '”', 'even', 'could', 'know', 'always', 'like', ' ', '', 'saw', 'says', 'got')
+                      'make', 'rather', 'able', 'yet', 'meet', '“', '”', 'even', 'could', 'know', 'always', 'like', ' ', '', 'saw', 'says', 'got',
+                      '?', '!', ':', 'also', 'say', 'may', 'see', 'every', 'things', ';', 'mr.', '(', ')', 'dr.', 'things', 'made', 'two')
+    # add custom stopwords to nltk stopwords
     stpwrds.extend(custom_stpwrds)
     filteredwords = list()
     for f in getfiles():
         words = word_tokenize(f)
         for w in words:
             w_lower = w.lower()
+            # filter out words mentioned in stopwords
             if w_lower not in stpwrds:
+                # convert to lower case and all to list 
                 filteredwords.append(w_lower)
     return filteredwords
 
@@ -42,6 +46,7 @@ def countwords():
         else:
             count = int(freq.get(i)) + 1
             freq[i] = count
+    # from dict delete all words with count less than 5
     for key, val in list(freq.items()):
         if val < 5:
             del freq[key]
@@ -49,10 +54,6 @@ def countwords():
 
 def placewords():
     for w, c in countwords().items():
-        # count = countwords().get(w)
-        # if count < 5:
-        #     pass
-        # else:
         cur.execute('INSERT OR IGNORE INTO wordcount (word, count) VALUES (?, ?)', (w, c, ))
         print('inserted')
     conn.commit()
