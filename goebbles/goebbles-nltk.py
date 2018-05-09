@@ -58,11 +58,18 @@ def placewords():
         print('inserted')
     conn.commit()
 
+def wordstxt():
+    with open('filterwords.txt', mode='w') as fhand:
+        for w in allwords():
+            fhand.write(w+' ')
+
 getfiles()
-print('got content')
+print('Fetched content')
 allwords()
-print('got words')
-countwords()
-print('counted words')
-placewords()
-print('placed words')
+print('Got words')
+wordstxt()
+print('Placed words in txt file')
+# countwords()
+# print('counted words')
+# placewords()
+# print('placed words in db')
