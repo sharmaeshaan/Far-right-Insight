@@ -61,5 +61,8 @@ def get_each():
             print('Error opening page')
             pass
 
+print('Started')
 get_all(startlink)
+print('Got all links')
 get_each()
+print('Got all content')
